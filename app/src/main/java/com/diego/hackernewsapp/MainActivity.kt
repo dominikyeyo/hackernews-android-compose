@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.diego.hackernewsapp.presentation.navigation.HackerNewsNavGraph
 import com.diego.hackernewsapp.presentation.post.PostsScreen
 import com.diego.hackernewsapp.ui.theme.HackerNewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,9 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HackerNewsAppTheme {
-                PostsScreen(
-                    onPostClick = {}
-                )
+                HackerNewsNavGraph()
             }
         }
     }
