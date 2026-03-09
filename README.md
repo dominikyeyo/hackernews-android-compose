@@ -103,21 +103,21 @@ Components:
 ---
 
 ## Architecture Diagram
-       UI Layer (Compose)
-             │
-             ▼
-        ViewModel
-             │
-             ▼
-          UseCase
-             │
-             ▼
-    Repository Interface
-             │
-    ┌────────┴────────┐
-    ▼                 ▼
-Remote API        Local Database
-(Retrofit)           (Room)
+        UI Layer (Compose)
+                 │
+                 ▼
+            ViewModel
+                 │
+                 ▼
+              UseCase
+                 │
+                 ▼
+        Repository Interface
+                 │
+        ┌────────┴────────┐
+        ▼                 ▼
+   Remote API        Local Database
+   (Retrofit)           (Room)
 
 
 ---
@@ -170,7 +170,7 @@ Deleted posts are persisted locally and **will not reappear after refresh**.
 
 1. Clone the repository
 
-git clone <repository-url>
+git clone https://github.com/dominikyeyo/hackernews-android-compose.git
 
 2. Open the project in Android Studio
 
@@ -199,26 +199,26 @@ or directly from Android Studio.
 
 ## Project Structure
 
-core  
-├── database  
-├── di  
+core
+├── database
+├── di
 └── network
 
-data  
-├── local  
-├── remote  
-├── mapper  
+data
+├── local
+├── remote
+├── mapper
 └── repository
 
-domain  
-├── model  
-├── repository  
+domain
+├── model
+├── repository
 └── usecase
 
-presentation  
-├── post  
-├── webview  
-├── navigation  
+presentation
+├── post
+├── webview
+├── navigation
 └── common
 
 ---
