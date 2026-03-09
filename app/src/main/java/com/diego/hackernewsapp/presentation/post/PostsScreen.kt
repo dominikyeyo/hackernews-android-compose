@@ -1,11 +1,9 @@
 package com.diego.hackernewsapp.presentation.post
 
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -13,10 +11,9 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
-import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.diego.hackernewsapp.domain.model.Post
+import com.diego.hackernewsapp.presentation.common.EmptyState
+import com.diego.hackernewsapp.presentation.common.ErrorState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +37,9 @@ fun PostsScreen(
     PullToRefreshBox(
         isRefreshing = uiState.isLoading,
         onRefresh = viewModel::refreshPosts,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
     ) {
         when {
             uiState.isLoading && uiState.posts.isEmpty() -> {
@@ -51,22 +52,21 @@ fun PostsScreen(
             }
 
             uiState.error != null && uiState.posts.isEmpty() -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = uiState.error ?: "Unexpected error",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
+                ErrorState(
+                    message = uiState.error ?: "Unexpected error",
+                    onRetry = viewModel::refreshPosts
+                )
+            }
+
+            uiState.posts.isEmpty() -> {
+                EmptyState(
+                    message = "No posts available"
+                )
             }
 
             else -> {
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     items(
                         items = uiState.posts,
