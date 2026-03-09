@@ -13,12 +13,12 @@ interface PostDao {
     @Query("SELECT * FROM posts WHERE isDeleted = 0 ORDER BY createdAt DESC")
     fun observePosts(): Flow<List<PostEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
-    suspend fun insertAll(posts: List<PostEntity>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPosts(posts: List<PostEntity>)
 
     @Query("UPDATE posts SET isDeleted = 1 WHERE id = :postId")
     suspend fun markAsDeleted(postId: String)
 
-    @Query("SELECT * FROM posts")
-    suspend fun getAllPosts(): List<PostEntity>
+    @Query("SELECT id FROM posts WHERE isDeleted = 1")
+    suspend fun getDeletedPostIds(): List<String>
 }

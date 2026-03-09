@@ -1,8 +1,8 @@
 package com.diego.hackernewsapp.data.mapper
 
+import com.diego.hackernewsapp.data.local.entity.PostEntity
 import com.diego.hackernewsapp.data.remote.dto.PostDto
 import com.diego.hackernewsapp.domain.model.Post
-import com.diego.hackernewsapp.data.local.entity.PostEntity
 
 fun PostDto.toEntity(): PostEntity? {
     val resolvedId = objectId ?: return null

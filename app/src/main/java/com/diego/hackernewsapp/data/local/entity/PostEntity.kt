@@ -5,11 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "posts")
 data class PostEntity(
-    @PrimaryKey
-    val id: String,
+    @PrimaryKey val id: String,
     val title: String,
     val author: String,
     val createdAt: String,
     val url: String,
-    val isDeleted: Boolean = false
+    val isDeleted: Boolean
 )
