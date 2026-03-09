@@ -1,6 +1,8 @@
 package com.diego.hackernewsapp.core.di
 
 import com.diego.hackernewsapp.data.remote.api.HackerNewsApi
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,13 +39,22 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideMoshi(): Moshi {
+        return Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+    }
+
+    @Provides
+    @Singleton
     fun provideRetrofit(
-        client: OkHttpClient
+        client: OkHttpClient,
+        moshi: Moshi
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
 

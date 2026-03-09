@@ -6,7 +6,7 @@ import retrofit2.http.Query
 
 interface HackerNewsApi {
 
-    @GET("api/v1/search_by_date")
+    @GET("search_by_date")
     suspend fun getMobilePosts(
         @Query("query") query: String = "mobile"
     ): PostResponseDto
